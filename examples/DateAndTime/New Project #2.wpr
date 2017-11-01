@@ -1,0 +1,11 @@
+#!wing
+#!version=6.0
+##################################################################
+# Wing IDE project file                                          #
+##################################################################
+[project attributes]
+proj.file-list = [loc('arithmetic.py'),
+                  loc('current_date_time.py'),
+                  loc('days.py'),
+                  loc('xmas.py')]
+proj.file-type = 'shared'
