@@ -230,4 +230,138 @@ python current_date_time.py
 
 ```
 
+### 夏令时
 
+夏令时（DST）是在夏季月份推进时钟的做法，这样晚上的日光会持续更长的时间。根据标准时间，时间在春天开始的时候，提前一个小时，然后再秋天的时候推迟一个小时。
+
+上面的例子检查了当前的日期是否在夏令时。
+
+函数`timeZoneAbbreviation()`返回某个日期的时区缩写。
+函数	`isDaylightTime()`返回日期是否在夏令时。
+
+该例子的输出为：
+
+```
+
+	Time zone:中国标准时间
+	The current date does not fall into DST time	
+
+```
+
+### Unix时代
+
+一个纪元是一个被选择的时间的特例作为一个特殊时期的开始。举个例子，在西方基督教的国家，一个时间纪元从第0天开始，也就是耶稣降生的那一天。另外一个例子就是French Republican Calendar，这个日期被使用了12年。纪元是共和时代的开始，该时代在1792年，9月22日正式宣布，这一天第一个共和诞生了，并且君主制废除了。
+
+计算机也有他们的纪元。一个非常流行的就是Unix纪元。Unix纪元是在时间1970-01-01T00:00:00Z ISO 8601。在计算机中的日期和时间通过从被定义的纪元到现在的秒数或时钟滴答的次数来决定。
+
+Unix时间是从Unix纪元开始经过的秒数。
+
+```
+
+	$ date +%s
+	1505128973
+
+```
+
+Unix时间命令可以被使用来获得Unix时间。在这个特殊的时刻，从Unix纪元开始到现在已经经过了1505128973秒。
+
+```
+
+	#!/usr/bin/python3
+	
+	from PyQt5.QtCore import QDateTime,Qt
+	
+	now = QDateTime.currentDateTime()
+	
+	unix_time = now.toSecsSinceEpoch()
+	print(unix_time)
+	
+	d = QDateTime.fromSecsSinceEpoch(unix_time)
+	print(d.toString(Qt.ISODate))
+
+```
+
+上面的例子打印了Unix时间并且将Unix时间转换成了QDateTime。
+
+使用函数`fromSecsSinceEpoch()`，我们将Unix时间转换成了`QDateTime`。
+
+下面是这个例子的输出：
+
+```
+
+	1509723507
+	2017-11-03T23:38:27
+
+```
+
+### 儒略日
+
+儒略日是从儒略周期开始的连续的天数。它主要由天文学家使用。他不应该与朱利安日历混淆。朱利安时期开始于4713 BC。朱利安日的数字0被赋予了4713 BC一月一日的中午。
+
+朱利安日数字（JDN）是从这个时期开始经过的天数。任何实例的朱利安日期（JD）是用于前中午的朱利安日期数字加上这一天的分数。（Q	t并不计算这个分数）。除了天文学家，朱利安日期常常被用于军用或大型机程序。
+
+```
+	
+	#!/usr/bin/python3
+	
+	from PyQt5.QtCore import QDate,Qt
+	
+	now = QDate.currentDate()
+	
+	print("Gregorian date for today: ", now.toString(Qt.ISODate))
+	print("Julian day for today: ",now.toJulianDay())
+
+```
+
+在这个例子中，我们计算了今天的格里高利日期和朱利安日。
+
+朱利安日是由函数`toJulianDay()`返回的。
+
+下面是程序的输出：
+
+```
+
+	Gregorian date for today:  2017-11-04
+	Julian day for today:  2458062
+
+```
+
+### 历史战役
+
+使用朱利安日，我们就可以进行跨世纪的计算。
+
+```
+
+	#!/usr/bin/python3
+	
+	from PyQt5.QtCore import QDate,Qt
+	
+	borodino_battle = QDate(1812,9,7)
+	slavkov_battle = QDate(1805,12,2)
+	
+	now = QDate.currentDate()
+	
+	j_today = now.toJulianDay()
+	j_borodino = borodino_battle.toJulianDay()
+	j_slavkov = slavkov_battle.toJulianDay()
+	
+	d1 = j_today - j_slavkov
+	d2 = j_today - j_borodino
+	
+	print("Days since Slavkov battle: {0}".format(d1))
+	print("Days since Borodino battle: {0}".format(d2))
+
+```
+
+上面的例子计算了从两个历史事件到现在的天数。
+
+下面是程序的输出：
+
+```
+
+	Days since Slavkov battle: 77404
+	Days since Borodino battle: 74933
+
+```
+
+在这篇文章中，我们学习了PyQt5的日期和时间的相关api。
